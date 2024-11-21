@@ -1,47 +1,59 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main() {
-	int lin, col;
-	scanf("%d", &lin);
-	scanf("%d", &col); 
+void imprimir_matriz(int **mat, int colunas, int linhas)
+{
+    if (linhas == 0 || colunas == 0)
+    {
+        printf("[matriz vazia]");
+        return;
+    }
+    for (int l = 0; l < linhas; l++)
+    {
+        for (int c = 0; c < colunas; c++)
+        {
+            printf("%d", mat[l][c]);
+            if (c < colunas - 1)
+            {
+                printf(" ");
+            }
+        }
 
-	int **matriz = (int**) malloc(lin * sizeof(int*));
-	
-	if(lin == 0 || col == 0) { 
-		matriz[0] = NULL;
-	}
-	else {
-		for(int i = 0; i < lin; i++) {
-			matriz[i] = (int*) malloc(col * sizeof(int));
-		}
-	}
-	
-	if(matriz[0] != NULL) {
-		
-		for(int i = 0; i < lin; i++) {
-			for(int j = 0; j < col; j++) {
-				scanf("%d", &matriz[i][j]);
-			}
-		}
+        printf("\n");
+    }
+}
 
-		for(int i = 0; i < lin; i++) {
-			for(int j = 0; j < col; j++) {
-				if(j == col-1) {
-					printf("%d", matriz[i][j]);
-				}else{
-					printf("%d ", matriz[i][j]);
-				}
-			}
-			printf("\n");
-		}
-	} else { 
-		printf("[matriz vazia]\n");
-	}
+void destroi_matriz(int **mat, int linhas)
+{
+    for (int l = 0; l < linhas; l++)
+        free(mat[l]);
+    free(mat);
+}
 
-	for(int i = 0; i < lin; i++) {
-		free(matriz[i]);
-	}
-	free(matriz);
-	return 0;
+int main()
+{
+
+    int lin, col;
+
+    scanf("%d", &lin);
+    scanf("%d", &col);
+
+    int **matriz;
+
+    matriz = (int **)malloc(lin * sizeof(int *));
+    for (int i = 0; i < lin; i++)
+        matriz[i] = (int *)malloc(col * sizeof(int));
+
+    for (int l = 0; l < lin; l++)
+    {
+        for (int c = 0; c < col; c++)
+        {
+            scanf("%d", &matriz[l][c]);
+        }
+    }
+
+    imprimir_matriz(matriz, col, lin);
+    destroi_matriz(matriz, lin);
+
+    return 0;
 }
