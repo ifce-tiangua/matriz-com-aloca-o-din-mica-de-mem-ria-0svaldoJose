@@ -1,39 +1,74 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main() {
-    int **matriz, linhas, colunas, i, j;
+void mostraMatriz(int **matriz, int linhas, int colunas);
 
-    scanf("%d %d", &linhas, &colunas);
+int main(){
 
-    if (linhas <= 0 || colunas <= 0) {
+    int **vet, linha, coluna;
+    int i, j;
+
+    scanf("%d",&linha);
+    scanf("%d",&coluna);
+
+    if(linha <= 0 || coluna <= 0){
+
         printf("[matriz vazia]\n");
+
         return 0;
+
     }
 
-    matriz = malloc(linhas * sizeof(int *));
-    for (i = 0; i < linhas; i++) {
-        matriz[i] = malloc(colunas * sizeof(int));
+    vet = (int**) malloc(linha*sizeof(int*));
+
+    for(i=0; i<linha; i++){
+
+        vet[i] = (int*) malloc(coluna*sizeof(int));
+
     }
 
-    for (i = 0; i < linhas; i++) {
-        for (j = 0; j < colunas; j++) {
-            scanf("%d", &matriz[i][j]);
+    for(i=0; i<linha; i++){
+
+        for(j=0; j<coluna; j++){
+
+            scanf("%d",&vet[i][j]);
+
         }
+
     }
 
-    for (i = 0; i < linhas; i++) {
-        for (j = 0; j < colunas - 1; j++) {
-            printf("%d ", matriz[i][j]);
-        }
-        printf("%d", matriz[i][j]);
-        printf("\n");
-    }
+    mostraMatriz(vet, linha, coluna);
 
-    for (i = 0; i < linhas; i++) {
-        free(matriz[i]);
+    for(i=0; i<linha; i++){
+
+        free(vet[i]);        
+
     }
-    free(matriz);
+    free(vet);
 
     return 0;
+}
+
+void mostraMatriz(int **matriz, int linhas, int colunas){
+
+    int i, j;
+
+
+    for(i=0; i<linhas; i++){
+    
+        for(j=0; j<colunas; j++){
+
+            printf("%d", matriz[i][j]);
+            if(j < colunas-1){
+
+                printf(" ");
+
+            }
+                 
+        }
+        
+        printf("\n");
+
+    }  
+
 }
